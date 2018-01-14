@@ -1,0 +1,14 @@
+{
+  "name": "etsy-scraper",
+  "version": "1.0.0",
+  "description": "Scrapes etsy sales pages for emails",
+  "main": "popup.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}
