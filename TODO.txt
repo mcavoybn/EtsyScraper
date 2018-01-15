@@ -1,9 +1,18 @@
-figure out why the get current page url isnt working
-add promises or callback chaining for page requests
-fix progress bar
+add date and other information to filename for downloaded csv
+make scrape cancel when not on the appropriate page
 test out error handling so that users can send useful messages in case of an error
 
 maybes:
 also capture what each email bought
 make the extension remain on top instead of closing on focus loss
 user settings dropdown with different options
+add promises or callback chaining for page requests
+turn start button red when not on a page that can be scraped
+add a little question mark with information about the app
+
+edge cases to test:
+user attempts to scrape but isnt on etsy
+user attempts to scrape on other systems
+user installs to chromium/older versions of chrome
+scraping from within intranet 
+
