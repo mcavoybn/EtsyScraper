@@ -1,0 +1,9 @@
+figure out why the get current page url isnt working
+add promises or callback chaining for page requests
+fix progress bar
+test out error handling so that users can send useful messages in case of an error
+
+maybes:
+also capture what each email bought
+make the extension remain on top instead of closing on focus loss
+user settings dropdown with different options
