@@ -69334,13 +69334,13 @@ function scrapeEmails(){
   startAtPage = parseInt( $("#startAtPageInput").val() );
   stopAtPage = parseInt( $("#stopAtPageInput").val() );
   if(startAtPage >= stopAtPage){
-    userMessage("Impoper Start Page / Stop Page inputs");
+    userMessage("Start page must be before stop page!");
     return;
   }
   chrome.tabs.getSelected( (tab) =>{
     chrome.tabs.update(tab.id, {url: (ETSY_URL + $("#startAtPageInput").val() )});
   });
-  numberOfPages = stopAtPage-startAtPage;
+  numberOfPages = stopAtPage - startAtPage;
   let i = startAtPage;
   setIntervalX(() => {
     scrapePage(currentPageURL, i);
@@ -69352,6 +69352,9 @@ function scrapeEmails(){
 }
 
 function scrapePage(url,i){
+  if(currentPageURL.split('=')[0] != ETSY_URL){
+    userMessage("ERROR: tab did not update url properly")
+  }
   request(url, (error, response, pageSource) => {
     if(!!!error){
       $("#progressBar").attr("aria-valuenow", (i/numberOfPages)*100 ).css("width", (((i/numberOfPages)*100).toString() + "%") );
@@ -69367,13 +69370,14 @@ function scrapePage(url,i){
 
 function downloadCSV(){
   uniqueEmails.forEach(email => emailStr += (email + ' \n'));
-	var blob = new Blob([emailStr], { type: "text/plain" });
-	saveAs(blob, 'emailList.csv');
+  let blob = new Blob([emailStr], { type: "text/plain" });
+  let filename = "Etsy_Sold_Order_Emails_Pages_" + startAtPage.toString() + "_to_" + stopAtPage.toString();
+	saveAs(blob, filename);
 }
 
 function setIntervalX(callback, delay, repetitions) {
-  var x = 0;
-  var intervalID = window.setInterval( () => {
+  let x = 0;
+  let intervalID = window.setInterval( () => {
      callback();
      if (++x === repetitions) { 
         window.clearInterval(intervalID);
@@ -69383,6 +69387,7 @@ function setIntervalX(callback, delay, repetitions) {
 
 function userMessage(message){
   $("#userMessageRow").show();
+  $("#userMessage").show();
   $("#userMessage").text(message);
   $("#userMessage").attr("color", "red");
 }
