@@ -7,10 +7,11 @@ user installs to chromium/older versions of chrome
 scraping from within intranet 
 check library issues for more possible test cases
 
-maybes:
-also capture what each email bought
+capture what each email bought
 user settings dropdown with different options
 add promises or callback chaining for page requests
 add a little question mark with information about the app
 make the extension remain on top instead of closing on focus loss
 
+possible premium features:
+higher max page count

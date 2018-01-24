@@ -1,75 +1,108 @@
-window.onload = onWindowLoad;
-
-function onWindowLoad() { 
-  $("#scrapeEmailsButton").click(scrapeEmails);
-  $("#downloadButton").click(downloadCSV);
-  $("#downloadButton").hide();
-  $("#downloadButtonRow").hide();
-  $("#userMessageRow").hide();
-}
-
-/////////////////////////////////////////////////////////////////////////
-
-const waitTime = 1300; //time between requests in milliseconds
+const REQUEST_WAIT_TIME = 1300; //time between requests in milliseconds
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g;
 const ETSY_URL = "https://www.etsy.com/your/orders/sold/all?page=";
 const request = require("request"); //https://github.com/request/request
 
-let startAtPage = -1;
-let stopAtPage = -1;
+let currentPageNum = -1;
+let stopAtPageNum = -1;
 let numberOfPages = -1;
 let emailStr = "";
 let currentPageURL = "";
 let uniqueEmails = [];
 let emails = [];
 
-function scrapeEmails(){
-  $("#userMessage").hide();
+window.onload = (() => { 
+  $("#scrapeEmailsButton").click(scrapeEmails);
+  $("#downloadButton").click(downloadCSV);
+  $("#showUserSettingsButton").click(userSettings.show);
+  $("#hideUserSettingsButton").click(userSettings.hide);
+
+  $("#downloadButtonRow").hide();
   $("#userMessageRow").hide();
-  uniqueEmails = [];
-  currentPageURL = ETSY_URL + $("#startAtPageInput").val();
-  startAtPage = parseInt( $("#startAtPageInput").val() );
-  stopAtPage = parseInt( $("#stopAtPageInput").val() );
-  if(startAtPage >= stopAtPage){
+  $("#userSettingsRow").hide();
+});
+
+/////////////////////////////////////////////////////////////////////////
+
+function scrapeEmails(){
+  initializeScrape();
+  if(currentPageNum > stopAtPageNum){
     userMessage("Start page must be before stop page!");
     return;
   }
-  chrome.tabs.getSelected( (tab) =>{
-    chrome.tabs.update(tab.id, {url: (ETSY_URL + $("#startAtPageInput").val() )});
-  });
-  numberOfPages = stopAtPage - startAtPage;
-  let i = startAtPage;
-  setIntervalX(() => {
-    scrapePage(currentPageURL, i);
-    i++;
-    currentPageURL = currentPageURL.split('=');
-    currentPageURL[1] = i.toString();
-    currentPageURL = currentPageURL.join('=');
-  }, waitTime, (stopAtPage-startAtPage+1) );
+  changeTabURLTo(ETSY_URL + currentPageNum);
+  if($("#emailOnlyRadio").prop("checked")){
+    setIntervalX(() => {
+      scrapePageRequest(currentPageURL, currentPageNum);
+      gotoNextPage();
+    }, REQUEST_WAIT_TIME, numberOfPages );
+  }else if($("#emailAndOrderRadio").prop("checked")){
+    userMessage("it go")
+    setIntervalX(() => {
+      chrome.tabs.getSelected( tab => { 
+        console.log(tab);
+        $('a').each(() => { console.log(this) });
+      });
+      gotoNextPage();
+    }, REQUEST_WAIT_TIME*3, numberOfPages );
+  }
 }
 
-function scrapePage(url,i){
-  if(currentPageURL.split('=')[0] != ETSY_URL){
-    userMessage("ERROR: tab did not update url properly")
-  }
+function scrapePageDOM(){
+  
+  
+}
+
+function scrapePageRequest(url, pageNum){
   request(url, (error, response, pageSource) => {
     if(!!!error){
-      $("#progressBar").attr("aria-valuenow", (i/numberOfPages)*100 ).css("width", (((i/numberOfPages)*100).toString() + "%") );
-      if((i/numberOfPages) == 1){
-        $('#downloadButtonRow').show();
-        $('#downloadButton').show();
-      }
+      setProgressBarPercentage((pageNum/numberOfPages)*100);
       emails = pageSource.match(EMAIL_REGEX);
-      if(!!emails) emails.forEach( e => { if(!uniqueEmails.includes(e) && e.split('@')[1] != "sentry.io") uniqueEmails.push(e) });
-    }else userMessage(error);
+      if(!!emails){
+        emails.forEach( e => { 
+          if(!uniqueEmails.includes(e) && e.split('@')[1] != "sentry.io") uniqueEmails.push(e) 
+        });
+      }else{
+        userMessage("No emails were found! Check the console for more info");
+        logErrorMessage();
+      }
+    }else{
+      userMessage(error);
+      logErrorMessage();
+    } 
   });
 }
 
 function downloadCSV(){
   uniqueEmails.forEach(email => emailStr += (email + ' \n'));
   let blob = new Blob([emailStr], { type: "text/plain" });
-  let filename = "Etsy_Sold_Order_Emails_Pages_" + startAtPage.toString() + "_to_" + stopAtPage.toString();
+  let filename = "Etsy_Emails_Page_" + startAtPage.toString() + "-" + stopAtPage.toString();
 	saveAs(blob, filename);
+}
+
+function logErrorMessage(){
+  
+}
+
+function userMessage(message){
+  $("#userMessageRow").show();
+  $("#userMessage").text(message);
+  $("#userMessage").attr("color", "red");
+}
+
+function changeTabURLTo(URL){
+  chrome.tabs.getSelected( tab => { 
+    chrome.tabs.update(tab.id, { url: URL });
+  });
+}
+
+function setProgressBarPercentage(percentage){
+  $("#progressBar")
+    .attr("aria-valuenow", percentage )
+    .css("width", ((percentage.toString() + "%")));
+  if(percentage >= 100){
+    $('#downloadButtonRow').show();
+  } 
 }
 
 function setIntervalX(callback, delay, repetitions) {
@@ -82,9 +115,32 @@ function setIntervalX(callback, delay, repetitions) {
   }, delay);
 }
 
-function userMessage(message){
-  $("#userMessageRow").show();
-  $("#userMessage").show();
-  $("#userMessage").text(message);
-  $("#userMessage").attr("color", "red");
+let userSettings = {
+  show: () => {
+    $("#userSettingsRow").show();
+    $("#showUserSettingsButtonRow").hide();
+  },
+  hide: () => {
+    $("#userSettingsRow").hide();
+    $("#showUserSettingsButtonRow").show();
+  }
+}
+
+function gotoNextPage(){
+  currentPageNum++;
+  currentPageURL = currentPageURL.split('=');
+  currentPageURL[1] = currentPageNum.toString();
+  currentPageURL = currentPageURL.join('=');
+  changeTabURLTo(currentPageURL);
+}
+
+function initializeScrape(){
+  uniqueEmails = [];
+  $("#userMessageRow").hide();
+  $("#downloadButtonRow").hide();
+  setProgressBarPercentage(0);
+  currentPageNum = parseInt( $("#startAtPageInput").val() );
+  stopAtPageNum = parseInt( $("#stopAtPageInput").val() );
+  numberOfPages = stopAtPageNum - currentPageNum + 1;
+  currentPageURL = ETSY_URL + currentPageNum;
 }
