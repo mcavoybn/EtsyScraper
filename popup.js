@@ -4,6 +4,7 @@ const ETSY_URL = "https://www.etsy.com/your/orders/sold/all?page=";
 const request = require("request"); //https://github.com/request/request
 
 let currentPageNum = -1;
+let startAtPageNum = -1;
 let stopAtPageNum = -1;
 let numberOfPages = -1;
 let emailStr = "";
@@ -24,6 +25,52 @@ window.onload = (() => {
 
 /////////////////////////////////////////////////////////////////////////
 
+function changeTabURLTo(URL){
+  chrome.tabs.getSelected( tab => { 
+    chrome.tabs.update(tab.id, { url: URL });
+  });
+}
+
+function downloadCSV(){
+  uniqueEmails.forEach(email => emailStr += (email + " \n"));
+  let blob = new Blob([emailStr], { type: "text/plain" });
+  let filename = "Etsy_Emails_Page_" + startAtPageNum.toString() + "-" + stopAtPageNum.toString();
+	saveAs(blob, filename);
+}
+
+function gotoNextPage(){
+  currentPageNum++;
+  currentPageURL = currentPageURL.split('=');
+  currentPageURL[1] = currentPageNum.toString();
+  currentPageURL = currentPageURL.join('=');
+  changeTabURLTo(currentPageURL);
+}
+
+function initializeScrape(){
+  uniqueEmails = [];
+  $("#userMessageRow").hide();
+  $("#downloadButtonRow").hide();
+  setProgressBarPercentage(0);
+  currentPageNum = parseInt( $("#startAtPageInput").val() );
+  startAtPageNum = parseInt( $("#startAtPageInput").val() );
+  stopAtPageNum = parseInt( $("#stopAtPageInput").val() );
+  numberOfPages = stopAtPageNum - currentPageNum;
+  currentPageURL = ETSY_URL + currentPageNum;
+}
+
+function logErrorMessage(){
+  let message = {
+    cPageNum: currentPageNum,
+    stopAtNum: stopAtPageNum,
+    nPages: numberOfPages,
+    emailString: emailStr,
+    cURL: currentPageURL,
+    uEmails: uniqueEmails,
+    es: emails
+  }
+  console.log(errorMessage);
+}
+
 function scrapeEmails(){
   initializeScrape();
   if(currentPageNum > stopAtPageNum){
@@ -36,20 +83,29 @@ function scrapeEmails(){
       scrapePageRequest(currentPageURL, currentPageNum);
       gotoNextPage();
     }, REQUEST_WAIT_TIME, numberOfPages );
-  }else if($("#emailAndOrderRadio").prop("checked")){
-    userMessage("it go")
-    setIntervalX(() => {
-      chrome.tabs.getSelected( tab => { 
-        console.log(tab);
-        $('a').each(() => { console.log(this) });
-      });
-      gotoNextPage();
-    }, REQUEST_WAIT_TIME*3, numberOfPages );
   }
+  // else if($("#emailAndOrderRadio").prop("checked")){
+  //   setIntervalX(() => {
+  //     chrome.tabs.executeScript(null, {file: "DOMget.js"});
+  //     gotoNextPage();
+  //     changeTabURLTo(currentPageURL);
+  //   }, REQUEST_WAIT_TIME*2, numberOfPages );
+  // }
+}
+
+function setIntervalX(callback, delay, repetitions) {
+  let x = 0;
+  let intervalID = window.setInterval( () => {
+     callback();
+     if (++x === repetitions) { 
+        window.clearInterval(intervalID);
+     }
+  }, delay);
 }
 
 function scrapePageDOM(){
-  
+ //TODO: write some kind of script to inject into current tab DOM
+ //then filter using $.each() or some similar function with regex to find names 
   
 }
 
@@ -73,29 +129,6 @@ function scrapePageRequest(url, pageNum){
   });
 }
 
-function downloadCSV(){
-  uniqueEmails.forEach(email => emailStr += (email + ' \n'));
-  let blob = new Blob([emailStr], { type: "text/plain" });
-  let filename = "Etsy_Emails_Page_" + startAtPage.toString() + "-" + stopAtPage.toString();
-	saveAs(blob, filename);
-}
-
-function logErrorMessage(){
-  
-}
-
-function userMessage(message){
-  $("#userMessageRow").show();
-  $("#userMessage").text(message);
-  $("#userMessage").attr("color", "red");
-}
-
-function changeTabURLTo(URL){
-  chrome.tabs.getSelected( tab => { 
-    chrome.tabs.update(tab.id, { url: URL });
-  });
-}
-
 function setProgressBarPercentage(percentage){
   $("#progressBar")
     .attr("aria-valuenow", percentage )
@@ -105,14 +138,10 @@ function setProgressBarPercentage(percentage){
   } 
 }
 
-function setIntervalX(callback, delay, repetitions) {
-  let x = 0;
-  let intervalID = window.setInterval( () => {
-     callback();
-     if (++x === repetitions) { 
-        window.clearInterval(intervalID);
-     }
-  }, delay);
+function userMessage(message){
+  $("#userMessageRow").show();
+  $("#userMessage").text(message);
+  $("#userMessage").attr("color", "red");
 }
 
 let userSettings = {
@@ -124,23 +153,4 @@ let userSettings = {
     $("#userSettingsRow").hide();
     $("#showUserSettingsButtonRow").show();
   }
-}
-
-function gotoNextPage(){
-  currentPageNum++;
-  currentPageURL = currentPageURL.split('=');
-  currentPageURL[1] = currentPageNum.toString();
-  currentPageURL = currentPageURL.join('=');
-  changeTabURLTo(currentPageURL);
-}
-
-function initializeScrape(){
-  uniqueEmails = [];
-  $("#userMessageRow").hide();
-  $("#downloadButtonRow").hide();
-  setProgressBarPercentage(0);
-  currentPageNum = parseInt( $("#startAtPageInput").val() );
-  stopAtPageNum = parseInt( $("#stopAtPageInput").val() );
-  numberOfPages = stopAtPageNum - currentPageNum + 1;
-  currentPageURL = ETSY_URL + currentPageNum;
 }
