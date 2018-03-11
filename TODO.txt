@@ -11,3 +11,5 @@ add a little question mark with information about the app
 
 possible premium features:
 higher max page count
+
+

@@ -39030,8 +39030,8 @@ function _setExports(ndebug) {
 
 module.exports = _setExports(process.env.NODE_NDEBUG);
 
-}).call(this,{"isBuffer":require("../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")},require('_process'))
-},{"../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"_process":138,"assert":16,"stream":174,"util":186}],236:[function(require,module,exports){
+}).call(this,{"isBuffer":require("C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")},require('_process'))
+},{"C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"_process":138,"assert":16,"stream":174,"util":186}],236:[function(require,module,exports){
 
 /*!
  *  Copyright 2010 LearnBoost <dev@learnboost.com>
@@ -40736,8 +40736,8 @@ CombinedStream.prototype._emitError = function(err) {
   this.emit('error', err);
 };
 
-}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"delayed-stream":244,"stream":174,"util":186}],243:[function(require,module,exports){
+}).call(this,{"isBuffer":require("C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"delayed-stream":244,"stream":174,"util":186}],243:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -40847,8 +40847,8 @@ function objectToString(o) {
   return Object.prototype.toString.call(o);
 }
 
-}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108}],244:[function(require,module,exports){
+}).call(this,{"isBuffer":require("C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108}],244:[function(require,module,exports){
 var Stream = require('stream').Stream;
 var util = require('util');
 
@@ -44575,8 +44575,8 @@ module.exports = {
 
 };
 
-}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"./utils":279,"assert-plus":235,"crypto":61,"http":175,"jsprim":287,"sshpk":328,"util":186}],279:[function(require,module,exports){
+}).call(this,{"isBuffer":require("C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"./utils":279,"C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"assert-plus":235,"crypto":61,"http":175,"jsprim":287,"sshpk":328,"util":186}],279:[function(require,module,exports){
 // Copyright 2012 Joyent, Inc.  All rights reserved.
 
 var assert = require('assert-plus');
@@ -62932,8 +62932,8 @@ Key._oldVersionDetect = function (obj) {
 	return ([1, 0]);
 };
 
-}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"./algs":311,"./dhe":313,"./ed-compat":314,"./errors":315,"./fingerprint":316,"./formats/auto":317,"./formats/pem":319,"./formats/pkcs1":320,"./formats/pkcs8":321,"./formats/rfc4253":322,"./formats/ssh":324,"./formats/ssh-private":323,"./private-key":330,"./signature":331,"./utils":333,"assert-plus":235,"crypto":61}],330:[function(require,module,exports){
+}).call(this,{"isBuffer":require("C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"./algs":311,"./dhe":313,"./ed-compat":314,"./errors":315,"./fingerprint":316,"./formats/auto":317,"./formats/pem":319,"./formats/pkcs1":320,"./formats/pkcs8":321,"./formats/rfc4253":322,"./formats/ssh":324,"./formats/ssh-private":323,"./private-key":330,"./signature":331,"./utils":333,"C:/Users/Ben McAvoy/AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":108,"assert-plus":235,"crypto":61}],330:[function(require,module,exports){
 (function (Buffer){
 // Copyright 2017 Joyent, Inc.
 
@@ -69301,8 +69301,10 @@ WError.prototype.cause = function we_cause(c)
 };
 
 },{"assert-plus":235,"core-util-is":243,"extsprintf":249,"util":186}],350:[function(require,module,exports){
+//all of this stuff is initialized on pageload
 const REQUEST_WAIT_TIME = 1300; //time between requests in milliseconds
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g;
+const ORDER_REGEX = /transaction\/[1-9].........">([A-Za-z\n\w\s&#;|-]+)/g;
 const ETSY_URL = "https://www.etsy.com/your/orders/sold/all?page=";
 const request = require("request"); //https://github.com/request/request
 
@@ -69314,18 +69316,17 @@ let emailStr = "";
 let currentPageURL = "";
 let uniqueEmails = [];
 let emails = [];
+let orders = [];
 
 window.onload = (() => { 
   $("#scrapeEmailsButton").click(scrapeEmails);
   $("#downloadButton").click(downloadCSV);
-  $("#showUserSettingsButton").click(userSettings.show);
-  $("#hideUserSettingsButton").click(userSettings.hide);
-
+  $("#progressDiv").hide();
   $("#downloadButtonRow").hide();
   $("#userMessageRow").hide();
-  $("#userSettingsRow").hide();
 });
 
+//each of things are for when the user hits the 'start' button
 /////////////////////////////////////////////////////////////////////////
 
 function changeTabURLTo(URL){
@@ -69335,66 +69336,40 @@ function changeTabURLTo(URL){
 }
 
 function downloadCSV(){
-  uniqueEmails.forEach(email => emailStr += (email + ' \n'));
+  orders.forEach( (order, i, a) => { a[i] = order.split("\n")[1].replace("&#39;", "'") });
+  uniqueEmails.forEach( (email,i) => emailStr += (email + "," + orders[i] + " \n"));
   let blob = new Blob([emailStr], { type: "text/plain" });
-  let filename = "Etsy_Emails_Page_" + startAtPageNum.toString() + "-" + stopAtPageNum.toString();
+  let filename = "Etsy_Emails_Page_" + startAtPageNum.toString() + "-" + stopAtPageNum.toString() + ".csv";
 	saveAs(blob, filename);
 }
 
-function gotoNextPage(){
-  currentPageNum++;
-  currentPageURL = currentPageURL.split('=');
-  currentPageURL[1] = currentPageNum.toString();
-  currentPageURL = currentPageURL.join('=');
-  changeTabURLTo(currentPageURL);
-}
-
-function initializeScrape(){
+function scrapeEmails(){
   uniqueEmails = [];
-  $("#userMessageRow").hide();
-  $("#downloadButtonRow").hide();
+  emailStr = "";
+  $("#scrapeEmailsButton").hide();
+  $("#progressDiv").show();
   setProgressBarPercentage(0);
   currentPageNum = parseInt( $("#startAtPageInput").val() );
   startAtPageNum = parseInt( $("#startAtPageInput").val() );
   stopAtPageNum = parseInt( $("#stopAtPageInput").val() );
   numberOfPages = stopAtPageNum - currentPageNum + 1;
   currentPageURL = ETSY_URL + currentPageNum;
-}
-
-function logErrorMessage(){
-  let message = {
-    cPageNum: currentPageNum,
-    stopAtNum: stopAtPageNum,
-    nPages: numberOfPages,
-    emailString: emailStr,
-    cURL: currentPageURL,
-    uEmails: uniqueEmails,
-    es: emails
-  }
-  console.log(errorMessage);
-}
-
-function scrapeEmails(){
-  initializeScrape();
   if(currentPageNum > stopAtPageNum){
     userMessage("Start page must be before stop page!");
     return;
   }
-  changeTabURLTo(ETSY_URL + currentPageNum);
-  if($("#emailOnlyRadio").prop("checked")){
-    setIntervalX(() => {
-      scrapePageRequest(currentPageURL, currentPageNum);
-      gotoNextPage();
-    }, REQUEST_WAIT_TIME, numberOfPages );
-  }else if($("#emailAndOrderRadio").prop("checked")){
-    setIntervalX(() => {
-      chrome.tabs.executeScript(null, {file: "DOMget.js"});
-      gotoNextPage();
-      changeTabURLTo(currentPageURL);
-    }, REQUEST_WAIT_TIME*2, numberOfPages );
-  }
+  setIntervalX(() => {
+    changeTabURLTo(currentPageURL);
+    if($("#emailOnlyRadio").prop("checked")) scrapePageRequest(currentPageURL, currentPageNum, false);
+    else scrapePageRequest(currentPageURL, currentPageNum, true);
+    currentPageNum++;
+    currentPageURL = currentPageURL.split('=');
+    currentPageURL[1] = currentPageNum.toString();
+    currentPageURL = currentPageURL.join('=');
+  }, REQUEST_WAIT_TIME, numberOfPages );
 }
 
+//invoke function 'callback' repeatedly with a period of 'delay', 'repetitions' times
 function setIntervalX(callback, delay, repetitions) {
   let x = 0;
   let intervalID = window.setInterval( () => {
@@ -69405,30 +69380,32 @@ function setIntervalX(callback, delay, repetitions) {
   }, delay);
 }
 
-function scrapePageDOM(){
- //TODO: write some kind of script to inject into current tab DOM
- //then filter using $.each() or some similar function with regex to find names 
-  
-}
-
-function scrapePageRequest(url, pageNum){
-  request(url, (error, response, pageSource) => {
-    if(!!!error){
-      setProgressBarPercentage((pageNum/numberOfPages)*100);
-      emails = pageSource.match(EMAIL_REGEX);
-      if(!!emails){
-        emails.forEach( e => { 
-          if(!uniqueEmails.includes(e) && e.split('@')[1] != "sentry.io") uniqueEmails.push(e) 
-        });
-      }else{
-        userMessage("No emails were found! Check the console for more info");
-        logErrorMessage();
-      }
+//create an http request for string 'url'
+//set the progress bar based on integer 'pageNum'
+//scrape order titles if withorders==true, otherwise don't get order titles
+function scrapePageRequest(url, pageNum, withOrders){
+  let pageOrders = [];
+ request(url, (error, response, pageSource) => {
+  if(!!!error){
+    emails = pageSource.match(EMAIL_REGEX);
+    pageOrders = pageSource.match(ORDER_REGEX);
+    if(withOrders) pageOrders.forEach(o => orders.push(o));
+    if(!!emails){
+      emails.forEach( (e, i, a) => { 
+        if(!uniqueEmails.includes(e) && e.split('@')[1] != "sentry.io"){
+          uniqueEmails.push(e);
+        }
+        if(i == a.length-1){
+          setProgressBarPercentage((pageNum/numberOfPages)*100);
+        } 
+      });
     }else{
-      userMessage(error);
-      logErrorMessage();
-    } 
-  });
+      userMessage("No emails were found!");
+    }
+  }else{
+    userMessage(error);
+  } 
+});
 }
 
 function setProgressBarPercentage(percentage){
@@ -69437,24 +69414,13 @@ function setProgressBarPercentage(percentage){
     .css("width", ((percentage.toString() + "%")));
   if(percentage >= 100){
     $('#downloadButtonRow').show();
+    $("#progressDiv").hide();
   } 
 }
-
 
 function userMessage(message){
   $("#userMessageRow").show();
   $("#userMessage").text(message);
   $("#userMessage").attr("color", "red");
-}
-
-let userSettings = {
-  show: () => {
-    $("#userSettingsRow").show();
-    $("#showUserSettingsButtonRow").hide();
-  },
-  hide: () => {
-    $("#userSettingsRow").hide();
-    $("#showUserSettingsButtonRow").show();
-  }
 }
 },{"request":298}]},{},[350]);
